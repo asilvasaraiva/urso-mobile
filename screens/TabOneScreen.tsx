@@ -1,15 +1,43 @@
 import { StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import { List } from '../components/List/List';
+
+export interface User {
+  id: number
+  nome: string
+  qtdProdutos: number
+}
+
+
+
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+  
+  const [user, setUser] = useState<User>()
+
+  const getList = async () => {
+    const usr:User =  await List('/users')
+    if (usr) {
+      setUser(usr)      
+    } 
+  }
+  
+  useEffect(() => {
+    getList()
+  }, [])
+
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <Text style={styles.title}>Pagina Inicial </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <Text>Seja Bem vindo  {user?.nome} </Text>
+    
+      {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>
   );
 }
