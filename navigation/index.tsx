@@ -16,6 +16,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import Login from '../screens/LoginScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -56,16 +57,20 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
+return(
+  <Login/>
+)
+
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="TabInicio"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="TabInicio"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+        options={({ navigation }: RootTabScreenProps<'TabInicio'>) => ({
           title: 'Inicio',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
@@ -85,7 +90,7 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="TabMensagem"
         component={TabTwoScreen}
         options={{
           title: 'Mensagens',
@@ -93,15 +98,15 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="add"
+        name="TabAdicionar"
         component={TabTwoScreen}
         options={{
-          title: 'Adicionar',
+          title: 'Criar Chat',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="addd"
+        name="TabPerfil"
         component={TabTwoScreen}
         options={{
           title: 'Conta',

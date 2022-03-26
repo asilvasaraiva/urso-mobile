@@ -8,19 +8,20 @@ import { List } from '../components/List/List';
 
 export interface User {
   id: number
-  nome: string
+  name: string
   qtdProdutos: number
 }
 
 
 
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function HomeScreen({ navigation }: RootTabScreenProps<'TabInicio'>) {
   
   const [user, setUser] = useState<User>()
 
   const getList = async () => {
-    const usr:User =  await List('/users')
+    const usr:User =  await List('/profile')
+    
     if (usr) {
       setUser(usr)      
     } 
@@ -35,7 +36,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     <View style={styles.container}>
       <Text style={styles.title}>Pagina Inicial </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text>Seja Bem vindo  {user?.nome} </Text>
+      <Text>Seja Bem vindo  {user?.name} </Text>
     
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>

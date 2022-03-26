@@ -1,0 +1,7 @@
+{
+  "*.{js,ts,tsx}": "eslint --ignore-path .gitignore --fix --ext",
+  "src/**/**": [
+    "npm run format",
+    "git add ."
+  ],
+}
