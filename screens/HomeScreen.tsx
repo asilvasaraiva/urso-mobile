@@ -5,6 +5,7 @@ import { Text, View } from '../components/Themed'
 import { AuthToken, RootTabScreenProps, User } from '../types'
 import { List } from '../components/List/List'
 import { Button } from 'react-native-elements'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'TabInicio'>) {
   const [user, setUser] = useState<User>()
@@ -35,6 +36,12 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabInicio
 
   return (
     <View style={styles.container}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['rgba(34, 193, 195, 1)', 'rgba(253, 187, 45, 1)']}
+        style={styles.bodyScreenBackGround}
+      />
+
       <Text style={styles.title}>Pagina Inicial </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text>Seja Bem vindo {user?.name} </Text>
@@ -49,6 +56,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  bodyScreenBackGround: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: -30,
+    bottom: 0
   },
   title: {
     fontSize: 20,

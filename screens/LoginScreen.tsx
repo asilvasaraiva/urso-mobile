@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Linking, StyleSheet } from 'react-native'
+import { Keyboard, Linking, Pressable, StyleSheet } from 'react-native'
 import { Button, Text, Input, Divider } from 'react-native-elements'
 import { View } from '../components/Themed'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthToken } from '../types'
-
+import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import AxiosRequest from '../src/utils/AxiosRequest'
@@ -42,6 +42,7 @@ export default function Login({ setToken, setForgot }: any) {
   const [erroActive, setErroActive] = useState(false)
   const [erroConexao, setErroConexao] = useState(false)
   const [spinActive, setSpinActive] = useState(false)
+  const navigation = useNavigation()
 
   const responseFacebook = () => {
     console.log('responseFB')
@@ -114,7 +115,14 @@ export default function Login({ setToken, setForgot }: any) {
               <Text style={styles.Labels}>Minha senha: </Text>
             </View>
 
-            <Input style={styles.Input} onChangeText={e => setPassword(e)} placeholder="****" />
+            <Input
+              style={styles.Input}
+              onSubmitEditing={Keyboard.dismiss}
+              blurOnSubmit={false}
+              secureTextEntry={true}
+              onChangeText={e => setPassword(e)}
+              placeholder="****"
+            />
             <View>
               <Text
                 style={styles.LabelsForgotPass}
@@ -128,7 +136,7 @@ export default function Login({ setToken, setForgot }: any) {
 
             <View>
               <Button
-                title="Log in"
+                title="Entrar"
                 loading={spinActive}
                 loadingProps={{ size: 'small', color: 'white' }}
                 buttonStyle={{
@@ -155,11 +163,62 @@ export default function Login({ setToken, setForgot }: any) {
                   <Text>Falha de conexão com o servidor, tente novamente em instantes</Text>
                 </View>
               )}
-              <View style={styles.DividerVertical}>
-                <Text>Google</Text>
-                <Divider orientation="vertical" />
-                <Text>Facebook</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+                <View>
+                  <Text style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>OU</Text>
+                </View>
+                <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
               </View>
+              <View style={styles.DividerVertical}>
+                <Button
+                  title="Google"
+                  loading={spinActive}
+                  loadingProps={{ size: 'small', color: 'white' }}
+                  buttonStyle={{
+                    backgroundColor: 'rgba(214, 61, 57, 1)',
+                    borderRadius: 25
+                  }}
+                  titleStyle={{ fontWeight: '200', fontSize: 18, color: 'black' }}
+                  containerStyle={{
+                    marginHorizontal: 30,
+                    height: 50,
+                    width: 125,
+                    marginVertical: 10
+                  }}
+                  onPress={() => handleSubmit()}
+                />
+                <Divider orientation="vertical" />
+                <Button
+                  title="Facebook"
+                  loading={spinActive}
+                  loadingProps={{ size: 'small', color: 'white' }}
+                  buttonStyle={{
+                    backgroundColor: 'rgba(78, 116, 289, 1)',
+                    borderRadius: 25
+                  }}
+                  titleStyle={{ fontWeight: '200', fontSize: 18, color: 'black' }}
+                  containerStyle={{
+                    marginHorizontal: 30,
+                    height: 50,
+                    width: 125,
+                    marginVertical: 10
+                  }}
+                  onPress={() => handleSubmit()}
+                />
+              </View>
+            </View>
+
+            <View style={{ display: 'flex', alignItems: 'center' }}>
+              <Text style={styles.LabelSignUP}>Não tem uma conta?</Text>
+              <Pressable
+                onPress={() => navigation.navigate('ModalSignUp')}
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.5 : 1
+                })}
+              >
+                <Text style={styles.SignUP}>cadastre-se</Text>
+              </Pressable>
             </View>
           </View>
         </View>
@@ -202,7 +261,7 @@ const styles = StyleSheet.create({
     top: '15%',
     left: '10%',
     width: '80%',
-    height: '65%',
+    height: '75%',
     backgroundColor: '#ffffff',
     borderRadius: 30
   },
@@ -210,6 +269,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 5,
     textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  LabelSignUP: {
+    fontSize: 18,
+    marginTop: 0,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  SignUP: {
+    fontSize: 17,
+    display: 'flex',
+    textAlignVertical: 'bottom',
+    color: 'green',
     fontWeight: 'bold'
   },
   LabelsForgotPass: {
@@ -225,7 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 1.3,
     left: 15,
     right: 10,
-    top: 10,
+    top: 5,
     bottom: 1
   },
   Input: {

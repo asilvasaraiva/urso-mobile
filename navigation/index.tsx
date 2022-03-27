@@ -14,6 +14,7 @@ import { ColorSchemeName, Pressable } from 'react-native'
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
 import ModalScreen from '../screens/ModalScreen'
+import SignUpScreen from '../screens/SignUpScreen'
 import NotFoundScreen from '../screens/NotFoundScreen'
 import HomeScreen from '../screens/HomeScreen'
 import TabTwoScreen from '../screens/TabTwoScreen'
@@ -22,6 +23,8 @@ import { AuthToken, RootStackParamList, RootTabParamList, RootTabScreenProps } f
 import LinkingConfiguration from './LinkingConfiguration'
 import TabProfileScreen from '../screens/ProfileScreen'
 import TabMessageScreen from '../screens/MessageScreen'
+import { LinearGradient } from 'expo-linear-gradient'
+import { colors } from 'react-native-elements'
 // import { getRawToken } from '../src/utils/Utils'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -48,6 +51,16 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen
+          name="ModalSignUp"
+          component={SignUpScreen}
+          options={{
+            title: 'Voltar ',
+            headerStyle: {
+              backgroundColor: 'rgba(34, 193, 195, 1)'
+            }
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   )
@@ -75,11 +88,25 @@ function BottomTabNavigator() {
 
   // return <Login setToken={setToken} setForgot={setForgot} />
 
+  const customHeaderStyle = {
+    headerStyle: {
+      backgroundColor: 'rgba(34, 193, 195, 1)',
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
+      borderBottomColor: 'red',
+      height: 100
+    },
+    tabBarStyle: {
+      backgroundColor: 'rgba(253, 187, 45, 1)'
+    }
+  }
+
   return (
     <BottomTab.Navigator
       initialRouteName="TabInicio"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint
+        tabBarInactiveTintColor: Colors[colorScheme].text,
+        tabBarActiveTintColor: Colors[colorScheme].background
       }}
     >
       <BottomTab.Screen
@@ -87,6 +114,13 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'TabInicio'>) => ({
           title: 'Inicio',
+          headerStyle: {
+            backgroundColor: 'rgba(34, 193, 195, 1)',
+            height: 100
+          },
+          tabBarStyle: {
+            backgroundColor: 'rgba(253, 187, 45, 1)'
+          },
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
@@ -110,6 +144,8 @@ function BottomTabNavigator() {
         component={TabMessageScreen}
         options={{
           title: 'Mensagens',
+          headerStyle: customHeaderStyle.headerStyle,
+          tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />
         }}
       />
@@ -118,6 +154,8 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Criar Chat',
+          headerStyle: customHeaderStyle.headerStyle,
+          tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />
         }}
       />
@@ -126,6 +164,8 @@ function BottomTabNavigator() {
         children={() => <TabProfileScreen setToken={setToken} />}
         options={{
           title: 'Conta',
+          headerStyle: customHeaderStyle.headerStyle,
+          tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="user-circle" color={color} />
         }}
       />

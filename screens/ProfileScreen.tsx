@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements'
 import { Text, View } from '../components/Themed'
 import { User } from '../types'
 import { List } from '../components/List/List'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export default function TabProfileScreen({ setToken }: any) {
   const [user, setUser] = useState<User>()
@@ -36,6 +37,11 @@ export default function TabProfileScreen({ setToken }: any) {
   }
   return (
     <View style={styles.container}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['rgba(34, 193, 195, 1)', 'rgba(253, 187, 45, 1)']}
+        style={styles.bodyScreenBackGround}
+      ></LinearGradient>
       <Text style={styles.title}>Tela de Mensagens</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text>
@@ -76,5 +82,12 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%'
+  },
+  bodyScreenBackGround: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: -30,
+    bottom: 0
   }
 })
