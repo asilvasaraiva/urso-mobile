@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Linking, StyleSheet } from 'react-native'
 import { Button, Text, Input, Divider } from 'react-native-elements'
 import { View } from '../components/Themed'
-
-import * as S from './Styles'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthToken } from '../types'
 
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -12,11 +12,11 @@ import AxiosRequest from '../src/utils/AxiosRequest'
 // import { GoogleLogin } from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login';
 
-// import { Text } from '../components/Themed'
 const URL_AUTH_SPRING = '/auth/login/'
 const URL_OAUTH2 = '/oauth2/authenticate'
 
 async function loginUser(credentials: any, setErroActive: any, setErroConexao: any, path: string) {
+  console.log('tentando conexão com o servidor')
   return AxiosRequest.post(path, JSON.stringify(credentials), {
     headers: {
       'Content-Type': 'application/json'
@@ -36,14 +36,12 @@ async function loginUser(credentials: any, setErroActive: any, setErroConexao: a
       }
     })
 }
-
-export default function Login() {
+export default function Login({ setToken, setForgot }: any) {
   const [username, setUserName] = useState<string>()
   const [password, setPassword] = useState<string>()
   const [erroActive, setErroActive] = useState(false)
   const [erroConexao, setErroConexao] = useState(false)
   const [spinActive, setSpinActive] = useState(false)
-  const [isNotAdmin, setIsNotAdmin] = useState(false)
 
   const responseFacebook = () => {
     console.log('responseFB')
@@ -52,17 +50,43 @@ export default function Login() {
     console.log('responseGoogle')
   }
 
-  const handleSubmit = () => {
-    alert('funfou')
-    console.log('handleSubmit')
+  const handleSubmit = async () => {
+    setSpinActive(true)
+    console.log('inciando autenticação com o servidor')
+    console.log(username)
+    console.log(password)
+    const token = await loginUser(
+      {
+        username,
+        password
+      },
+      setErroActive,
+      setErroConexao,
+      URL_AUTH_SPRING
+    )
+    setSpinActive(false)
+    console.log(token)
+    validateTokent(token)
   }
 
-  const validateTokent = () => {
-    console.log('validateTokent')
+  const validateTokent = async (token: any) => {
+    try {
+      const jsonValue = JSON.stringify(token)
+      await AsyncStorage.setItem('token', jsonValue)
+      setToken(JSON.parse(jsonValue))
+    } catch (e: any) {
+      // save error
+      console.log(e.message)
+    }
+  }
+
+  const logOut = () => {
+    AsyncStorage.removeItem('token')
+    alert('Desconectado com sucesso')
+    // window.location.reload()
   }
 
   function changePermission() {
-    setIsNotAdmin(false)
     setErroActive(false)
     setErroConexao(false)
   }
@@ -105,7 +129,7 @@ export default function Login() {
             <View>
               <Button
                 title="Log in"
-                loading={false}
+                loading={spinActive}
                 loadingProps={{ size: 'small', color: 'white' }}
                 buttonStyle={{
                   backgroundColor: 'rgba(111, 202, 186, 1)',
@@ -124,11 +148,6 @@ export default function Login() {
               {erroActive && (
                 <View class-name="validation">
                   <Text>Credenciais inválidas</Text>
-                </View>
-              )}
-              {isNotAdmin && (
-                <View class-name="validation">
-                  <Text>Conta informada não é um adminstrador</Text>
                 </View>
               )}
               {erroConexao && (
@@ -263,27 +282,7 @@ const styles = StyleSheet.create({
 
 //     const handleSubmit = async e => {
 //         e.preventDefault();
-//         setSpinActive(true);
-//         const token = await loginUser({
-//             username,
-//             password
-//         }, setErroActive, setErroConexao, URL_AUTH_SPRING);
-//         setSpinActive(false);
-//         validateTokent(token);
 
-//     }
-
-//     const validateTokent = (token)=>{
-//         if (token !== undefined) {
-//             if (token.roles[0] === "ADMIN") {
-//                 sessionStorage.setItem('token', JSON.stringify(token));
-//                 setToken(token);
-//                 history.push("/");
-//             } else {
-//                 console.log("Usuário não é admin")
-//                 setIsNotAdmin(true);
-//             }
-//         }
 //     }
 
 //     if (spinActive) {
