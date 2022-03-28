@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Keyboard, Linking, ScrollView, StyleSheet } from 'react-native'
 import { Button, Text, Input, Divider } from 'react-native-elements'
 import { View } from '../components/Themed'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -40,6 +41,7 @@ async function createUser(
       }
     })
 }
+
 export default function SignUpScreen({ setToken, setForgot }: any) {
   const [name, setName] = useState<string>()
   const [surname, setSurname] = useState<string>()
@@ -50,6 +52,28 @@ export default function SignUpScreen({ setToken, setForgot }: any) {
   const [erroConexao, setErroConexao] = useState(false)
   const [spinActive, setSpinActive] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
+
+  const [date, setDate] = useState(new Date(Date.now()))
+  const [mode, setMode] = useState<any>('date')
+  const [show, setShow] = useState(false)
+
+  const onChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setDate(currentDate)
+    setBirth(currentDate.toLocaleDateString())
+    console.log('aniversario :')
+    console.log(birth)
+  }
+
+  const showMode = (currentMode: any) => {
+    setShow(true)
+    setMode(currentMode)
+  }
+
+  const showDatepicker = () => {
+    showMode('date')
+  }
 
   const responseFacebook = () => {
     console.log('responseFB')
@@ -79,6 +103,7 @@ export default function SignUpScreen({ setToken, setForgot }: any) {
     setButtonDisabled(true)
     console.log('token')
     console.log(token)
+    alert('Cadastro Realizado com Sucesso')
   }
 
   function changePermission() {
@@ -94,35 +119,47 @@ export default function SignUpScreen({ setToken, setForgot }: any) {
         style={styles.bodyScreenBackGround}
       >
         <ScrollView>
-          <View style={{ backgroundColor: 'transparent' }}>
+          <View style={{ backgroundColor: 'transparent', marginLeft: 6, marginRight: 6 }}>
             <Text style={styles.title}>Cadastro </Text>
             <Text style={styles.subTitle}>
               Por favor, preencha o formulário abaixo para continuar.{' '}
             </Text>
             <View style={{ backgroundColor: 'transparent' }}>
-              <Text style={styles.Labels}>Nome: </Text>
+              <Text style={{ fontSize: 20 }}>Seu Nome: </Text>
 
               <Input
-                style={styles.Input}
+                style={{ fontSize: 20 }}
                 onSubmitEditing={Keyboard.dismiss}
                 blurOnSubmit={false}
                 onChangeText={e => setName(e)}
                 placeholder="Informe seu Nome"
               />
 
-              <Text style={styles.Labels}>Sobrenome: </Text>
-              <Input
-                style={styles.Input}
-                onChangeText={value => setSurname(value)}
-                placeholder="Sobrenome"
-              />
-
-              <Text style={styles.Labels}>Idade: </Text>
-              <Input
-                style={styles.Input}
-                onChangeText={value => setBirth(new Date(value))}
-                placeholder="Data Nascimento"
-              />
+              <View style={{ backgroundColor: 'transparent', flexDirection: 'row' }}>
+                <View style={{ backgroundColor: 'transparent', flex: 2 }}>
+                  <Text style={styles.Labels}>Sobrenome: </Text>
+                  <Input onChangeText={value => setSurname(value)} placeholder="Sobrenome" />
+                </View>
+                <View style={{ backgroundColor: 'transparent', flex: 1 }}>
+                  <Text style={styles.Labels}>Idade: </Text>
+                  <Input
+                    onPressOut={showDatepicker}
+                    style={{ flex: 1, borderStartColor: 'red' }}
+                    placeholder="Data"
+                    value={birth}
+                  />
+                  {show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode={mode}
+                      dateFormat={'day month year'}
+                      is24Hour={true}
+                      onChange={onChange}
+                    />
+                  )}
+                </View>
+              </View>
 
               <Text style={styles.Labels}>Endereço de email: </Text>
               <Input
@@ -143,21 +180,16 @@ export default function SignUpScreen({ setToken, setForgot }: any) {
 
               {/* <View> */}
               <Button
-                title="Log in"
+                title="Realizar Cadastro"
                 disabled={buttonDisabled}
                 loading={spinActive}
+                style={{ display: 'flex', justifyContent: 'center' }}
                 loadingProps={{ size: 'small', color: 'white' }}
                 buttonStyle={{
                   backgroundColor: 'rgba(111, 202, 186, 1)',
                   borderRadius: 25
                 }}
                 titleStyle={{ fontWeight: '200', fontSize: 23, color: 'black' }}
-                containerStyle={{
-                  marginHorizontal: 30,
-                  height: 50,
-                  width: 250,
-                  marginVertical: 10
-                }}
                 onPress={() => handleSubmit()}
               />
 
@@ -186,12 +218,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     letterSpacing: 2,
-    marginLeft: 5,
+
     top: 5
   },
   subTitle: {
     fontSize: 18,
-    marginLeft: 5,
     marginBottom: 25,
     fontWeight: 'bold'
   },
@@ -204,9 +235,7 @@ const styles = StyleSheet.create({
   },
   Labels: {
     fontSize: 20,
-    marginBottom: 5,
-    textAlign: 'center',
-    fontWeight: 'bold'
+    marginBottom: 5
   },
   Input: {
     marginTop: 5,

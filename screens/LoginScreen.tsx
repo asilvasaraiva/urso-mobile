@@ -173,7 +173,7 @@ export default function Login({ setToken, setForgot }: any) {
               <View style={styles.DividerVertical}>
                 <Button
                   title="Google"
-                  loading={spinActive}
+                  // loading={spinActive}
                   loadingProps={{ size: 'small', color: 'white' }}
                   buttonStyle={{
                     backgroundColor: 'rgba(214, 61, 57, 1)',
@@ -191,7 +191,7 @@ export default function Login({ setToken, setForgot }: any) {
                 <Divider orientation="vertical" />
                 <Button
                   title="Facebook"
-                  loading={spinActive}
+                  // loading={spinActive}
                   loadingProps={{ size: 'small', color: 'white' }}
                   buttonStyle={{
                     backgroundColor: 'rgba(78, 116, 289, 1)',
