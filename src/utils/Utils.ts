@@ -22,8 +22,9 @@ export const retrieveToken = async () => {
 }
 
 export const calculaIdade = (nascimento: any) => {
+  let nasc = new Date(nascimento)
   let hoje = new Date(Date.now())
   return Math.floor(
-    Math.ceil(Math.abs(nascimento.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25
+    Math.ceil(Math.abs(nasc.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25
   )
 }

@@ -13,7 +13,7 @@ import { ColorSchemeName, Pressable } from 'react-native'
 
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
-import ModalScreen from '../screens/ModalScreen'
+import ModalScreen from '../screens/Modal/ModalScreen'
 import SignUpScreen from '../screens/SignUpScreen'
 import NotFoundScreen from '../screens/NotFoundScreen'
 import HomeScreen from '../screens/HomeScreen'
@@ -25,6 +25,7 @@ import TabProfileScreen from '../screens/ProfileScreen'
 import TabMessageScreen from '../screens/MessageScreen'
 import { LinearGradient } from 'expo-linear-gradient'
 import { colors } from 'react-native-elements'
+import ModalResetPassword from '../screens/Modal/ModalResetPassword'
 // import { getRawToken } from '../src/utils/Utils'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -54,6 +55,16 @@ function RootNavigator() {
         <Stack.Screen
           name="ModalSignUp"
           component={SignUpScreen}
+          options={{
+            title: 'Voltar ',
+            headerStyle: {
+              backgroundColor: 'rgba(34, 193, 195, 1)'
+            }
+          }}
+        />
+        <Stack.Screen
+          name="ModalResetPassword"
+          component={ModalResetPassword}
           options={{
             title: 'Voltar ',
             headerStyle: {
@@ -91,14 +102,19 @@ function BottomTabNavigator() {
   const customHeaderStyle = {
     headerStyle: {
       backgroundColor: 'rgba(34, 193, 195, 1)',
-      borderBottomLeftRadius: 30,
-      borderBottomRightRadius: 30,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
       borderBottomColor: 'red',
       height: 100
     },
     tabBarStyle: {
       backgroundColor: 'rgba(253, 187, 45, 1)'
     }
+  }
+
+  const customTittleBar = {
+    fontSize: 25,
+    color: 'black'
   }
 
   return (
@@ -114,6 +130,7 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'TabInicio'>) => ({
           title: 'Inicio',
+          headerTitleStyle: customTittleBar,
           headerStyle: {
             backgroundColor: 'rgba(34, 193, 195, 1)',
             height: 100
@@ -145,6 +162,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Mensagens',
           headerStyle: customHeaderStyle.headerStyle,
+          headerTitleStyle: customTittleBar,
           tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />
         }}
@@ -155,6 +173,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Criar Chat',
           headerStyle: customHeaderStyle.headerStyle,
+          headerTitleStyle: customTittleBar,
           tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />
         }}
@@ -163,8 +182,9 @@ function BottomTabNavigator() {
         name="TabPerfil"
         children={() => <TabProfileScreen setToken={setToken} />}
         options={{
-          title: 'Conta',
+          title: 'Minha Conta',
           headerStyle: customHeaderStyle.headerStyle,
+          headerTitleStyle: customTittleBar,
           tabBarStyle: customHeaderStyle.tabBarStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name="user-circle" color={color} />
         }}

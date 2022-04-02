@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Modal: undefined
   Login: undefined
   ModalSignUp: undefined
+  ModalResetPassword: undefined
   NotFound: undefined
 }
 
