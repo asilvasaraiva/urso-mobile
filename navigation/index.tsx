@@ -17,7 +17,7 @@ import ModalScreen from '../screens/Modal/ModalScreen'
 import SignUpScreen from '../screens/SignUpScreen'
 import NotFoundScreen from '../screens/NotFoundScreen'
 import HomeScreen from '../screens/HomeScreen'
-import TabTwoScreen from '../screens/TabTwoScreen'
+import TabCreacteChat from '../screens/TabCreatChat'
 import Login from '../screens/LoginScreen'
 import { AuthToken, RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types'
 import LinkingConfiguration from './LinkingConfiguration'
@@ -168,8 +168,8 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabAdicionar"
-        component={TabTwoScreen}
+        name="TabCriarChat"
+        component={TabCreacteChat}
         options={{
           title: 'Criar Chat',
           headerStyle: customHeaderStyle.headerStyle,

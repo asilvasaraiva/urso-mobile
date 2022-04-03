@@ -42,16 +42,19 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabInicio
         style={styles.bodyScreenBackGround}
       />
 
-      <Text style={styles.title}>Pagina Inicial </Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text>Seja Bem vindo {user?.name} </Text>
-      {/* <ImageBackground
+      <ImageBackground
         source={require('../assets/images/urso-bg.png')}
-        style={styles.imageForeground}
+        imageStyle={{ resizeMode: 'contain', opacity: 0.4 }}
+        style={{ width: 400, height: 400 }}
       >
-        <Text style={styles.text}>React Native</Text>
-      </ImageBackground> */}
-
+        <View style={styles.container}>
+          <Text style={styles.title}>Pagina Inicial </Text>
+          <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+          <Text style={styles.LabelsTitle}>
+            Seja Bem vindo <Text>{user?.name}</Text>{' '}
+          </Text>
+        </View>
+      </ImageBackground>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>
   )
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   bodyScreenBackGround: {
     position: 'absolute',
@@ -80,19 +84,19 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   imageBackground: {
-    flex: 1,
-    resizeMode: 'cover',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    resizeMode: 'contain'
   },
-  imageForeground: {
-    width: 250,
-    height: 250
-  },
-  text: {
-    color: 'white',
-    fontSize: 42,
+  LabelsTitle: {
+    marginLeft: 5,
+    marginRight: 5,
+    fontSize: 20,
+    marginBottom: 5,
     fontWeight: 'bold',
-    textAlign: 'center'
+    justifyContent: 'space-between',
+    color: 'rgba(0,0,0,0.5)'
   }
 })
+
+//center,contain,cover, repeat, stretch

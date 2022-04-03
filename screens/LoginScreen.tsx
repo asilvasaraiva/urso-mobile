@@ -27,8 +27,8 @@ async function loginUser(credentials: any, setErroActive: any, setErroConexao: a
       if (error !== null) {
         let status = error.status
         if (status === 401) {
-          console.log('usuário ou senha inválido')
-          setErroActive(true)
+          alert('Usuário ou senha inválido')
+          // setErroActive(true)
         }
       } else {
         console.log('Falha de conexão com o servidor, tente novamente em instantes')
@@ -153,11 +153,11 @@ export default function Login({ setToken, setForgot }: any) {
                 onPress={() => handleSubmit()}
               />
 
-              {erroActive && (
+              {/* {erroActive && (
                 <View class-name="validation">
                   <Text>Credenciais inválidas</Text>
                 </View>
-              )}
+              )} */}
               {erroConexao && (
                 <View class-name="validation">
                   <Text>Falha de conexão com o servidor, tente novamente em instantes</Text>

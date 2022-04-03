@@ -4,25 +4,25 @@ import { ImageBackground, StyleSheet } from 'react-native'
 import EditScreenInfo from '../components/EditScreenInfo'
 import { Text, View } from '../components/Themed'
 
-export default function TabMessageScreen() {
+export default function TabCreacteChat() {
   return (
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
         colors={['rgba(34, 193, 195, 1)', 'rgba(253, 187, 45, 1)']}
         style={styles.bodyScreenBackGround}
-      ></LinearGradient>
+      />
       <ImageBackground
         source={require('../assets/images/urso-bg.png')}
         imageStyle={{ resizeMode: 'contain', opacity: 0.4 }}
         style={{ width: 400, height: 400 }}
       >
         <View style={styles.container}>
-          <Text style={styles.title}>Tela de Mensagens</Text>
+          <Text style={styles.title}>Criar Chat</Text>
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-          <Text style={styles.LabelsTitle}>Área destinada as mensagens do usuário</Text>
+          <Text style={styles.LabelsTitle}>Espaço destinado a criação de um novo Chat</Text>
+          {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
         </View>
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
       </ImageBackground>
     </View>
   )

@@ -30,7 +30,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 export type RootTabParamList = {
   TabInicio: undefined
   TabMensagem: undefined
-  TabAdicionar: undefined
+  TabCriarChat: undefined
   TabPerfil: undefined
 }
 
