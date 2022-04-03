@@ -77,7 +77,7 @@ export default function TabProfileScreen({ setToken }: any) {
                 title="Notificações e Depoimentos"
                 loadingProps={styles.ButtonTitleStyle}
                 buttonStyle={styles.Button}
-                onPress={() => navigation.navigate('ModalResetPassword')}
+                onPress={() => alert('Em breve, funcionalidade  ainda em Desenvolvimento')}
                 titleStyle={styles.ButtonTitleStyle}
               />
               <Button
@@ -91,7 +91,7 @@ export default function TabProfileScreen({ setToken }: any) {
                 title="Enviar Duvida / Sugestão"
                 loadingProps={styles.ButtonTitleStyle}
                 buttonStyle={styles.Button}
-                onPress={() => navigation.navigate('ModalResetPassword')}
+                onPress={() => alert('Em breve, funcionalidade ainda em Desenvolvimento')}
                 titleStyle={styles.ButtonTitleStyle}
               />
 

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { ImageBackground, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Text, View } from '../components/Themed'
@@ -45,6 +45,12 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabInicio
       <Text style={styles.title}>Pagina Inicial </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text>Seja Bem vindo {user?.name} </Text>
+      {/* <ImageBackground
+        source={require('../assets/images/urso-bg.png')}
+        style={styles.imageForeground}
+      >
+        <Text style={styles.text}>React Native</Text>
+      </ImageBackground> */}
 
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>
@@ -72,5 +78,21 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%'
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageForeground: {
+    width: 250,
+    height: 250
+  },
+  text: {
+    color: 'white',
+    fontSize: 42,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 })
