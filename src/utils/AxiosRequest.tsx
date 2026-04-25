@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const URL = 'http://192.168.101.6:8080/api'
-const URL = 'https://ursolution.azurewebsites.net/api'
+const URL = 'http://localhost:8080/api'
 
 const AxiosRequest = axios.create({
   baseURL: URL
